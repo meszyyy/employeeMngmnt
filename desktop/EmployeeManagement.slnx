@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="EmployeeManagement.Core/EmployeeManagement.Core.csproj" />
+  <Project Path="EmployeeManagement.Data/EmployeeManagement.Data.csproj" />
+  <Project Path="EmployeeManagement.WinForms/EmployeeManagement.WinForms.csproj" />
+</Solution>
