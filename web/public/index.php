@@ -9,6 +9,7 @@ $employees = $employeeRepository->getAll();
 require __DIR__ . '/../templates/header.php';
 ?>
 
+<a href="edit.php" class="btn btn-primary mb-3">+ New</a>
 <table class="table table-hover bg-white">
     <thead>
         <tr>
@@ -17,6 +18,7 @@ require __DIR__ . '/../templates/header.php';
             <th>E-mail</th>
             <th>Department</th>
             <th>Date of entry</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -27,6 +29,7 @@ require __DIR__ . '/../templates/header.php';
                 <td><?= e($employee['Email']) ?></td>
                 <td><?= e($employee['DepartmentName']) ?></td>
                 <td><?= e($employee['EntryDate']) ?></td>
+                <td><a href="edit.php?id=<?= e((string) $employee['Id']) ?>" class="btn btn-sm btn-outline-secondary">Edit</a></td>
             </tr>
         <?php endforeach; ?>
     </tbody>
