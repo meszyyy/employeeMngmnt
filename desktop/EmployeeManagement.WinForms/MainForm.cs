@@ -10,6 +10,7 @@ public partial class MainForm : Form
     public MainForm(IEmployeeRepository employeeRepository, IDepartmentRepository departmentRepository)
     {
         InitializeComponent();
+        employeesGrid.AutoGenerateColumns = false;
         _employeeRepository = employeeRepository;
         _departmentRepository = departmentRepository;
     }
