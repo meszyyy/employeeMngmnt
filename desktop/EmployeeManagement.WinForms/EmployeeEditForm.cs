@@ -1,3 +1,4 @@
+using EmployeeManagement.Core.Exceptions;
 using EmployeeManagement.Core.Models;
 using EmployeeManagement.Core.Repositories;
 using System.Net.Mail;
@@ -74,6 +75,11 @@ public partial class EmployeeEditForm : Form
             }
 
             DialogResult = DialogResult.OK;
+        }
+        catch (DuplicateEmailException)
+        {
+            errorProvider.SetError(emailTextBox, "This e-mail address is already in use.");
+            emailTextBox.Focus();
         }
         catch (Exception ex)
         {

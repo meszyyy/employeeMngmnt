@@ -1,4 +1,5 @@
 using Dapper;
+using EmployeeManagement.Core.Exceptions;
 using EmployeeManagement.Core.Models;
 using EmployeeManagement.Core.Repositories;
 using Microsoft.Data.SqlClient;
@@ -17,16 +18,23 @@ public class EmployeeRepository(string connectionString) : IEmployeeRepository
             VALUES (@FirstName, @LastName, @Email, @EntryDate, @DepartmentId);
             """;
 
-        var newId = await connection.ExecuteScalarAsync<int>(sql, new
+        try
         {
-            employee.FirstName,
-            employee.LastName,
-            employee.Email,
-            employee.EntryDate,
-            DepartmentId = employee.Department.Id
-        });
+            var newId = await connection.ExecuteScalarAsync<int>(sql, new
+            {
+                employee.FirstName,
+                employee.LastName,
+                employee.Email,
+                employee.EntryDate,
+                DepartmentId = employee.Department.Id
+            });
 
-        return newId;
+            return newId;
+        }
+        catch (SqlException ex) when (IsDuplicateEmail(ex))
+        {
+            throw new DuplicateEmailException(employee.Email);
+        }
     }
 
     public async Task<bool> DeleteAsync(int id)
@@ -102,7 +110,20 @@ public class EmployeeRepository(string connectionString) : IEmployeeRepository
             WHERE Id = @Id;
             """;
 
-        var affectedRows = await connection.ExecuteAsync(sql, new { Id = employee.Id, FirstName = employee.FirstName, LastName = employee.LastName, Email = employee.Email, EntryDate = employee.EntryDate, DepartmentId = employee.Department.Id });
-        return affectedRows > 0;
+        try
+        {
+            var affectedRows = await connection.ExecuteAsync(sql, new { Id = employee.Id, FirstName = employee.FirstName, LastName = employee.LastName, Email = employee.Email, EntryDate = employee.EntryDate, DepartmentId = employee.Department.Id });
+            return affectedRows > 0;
+        }
+        catch (SqlException ex) when (IsDuplicateEmail(ex))
+        {
+            throw new DuplicateEmailException(employee.Email);
+        }
     }
+
+    // 2627 = unique constraint violation, 2601 = unique index violation.
+    // The constraint name check makes sure we only translate the e-mail uniqueness error.
+    private static bool IsDuplicateEmail(SqlException ex) =>
+        ex.Number is 2627 or 2601
+        && ex.Message.Contains("UQ_Employee_Email", StringComparison.OrdinalIgnoreCase);
 }
