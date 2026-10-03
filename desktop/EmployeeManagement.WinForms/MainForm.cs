@@ -35,6 +35,8 @@ public partial class MainForm : Form
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Error);
         }
+
+        UpdateButtonStates();
     }
 
     private async void refreshButton_Click(object sender, EventArgs e)
@@ -134,5 +136,17 @@ public partial class MainForm : Form
         {
             await LoadEmployeesAsync();
         }
+    }
+
+    private void UpdateButtonStates()
+    {
+        var hasSelection = employeesGrid.CurrentRow?.DataBoundItem is Employee;
+        editButton.Enabled = hasSelection;
+        deleteButton.Enabled = hasSelection;
+    }
+
+    private void employeesGrid_SelectionChanged(object sender, EventArgs e)
+    {
+        UpdateButtonStates();
     }
 }

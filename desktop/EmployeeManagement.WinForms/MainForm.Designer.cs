@@ -62,6 +62,7 @@ partial class MainForm
         employeesGrid.Size = new Size(800, 425);
         employeesGrid.TabIndex = 0;
         employeesGrid.CellDoubleClick += employeesGrid_CellDoubleClick;
+        employeesGrid.SelectionChanged += employeesGrid_SelectionChanged;
         // 
         // firstNameColumn
         // 
