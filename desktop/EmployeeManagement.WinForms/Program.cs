@@ -25,6 +25,6 @@ static class Program
         var departmentRepository = new DepartmentRepository(connectionString);
         var employeeRepository = new EmployeeRepository(connectionString);
 
-        Application.Run(new Form1(employeeRepository, departmentRepository));
+        Application.Run(new MainForm(employeeRepository, departmentRepository));
     }
 }

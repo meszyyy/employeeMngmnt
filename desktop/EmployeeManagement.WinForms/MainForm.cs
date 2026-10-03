@@ -2,15 +2,21 @@ using EmployeeManagement.Core.Repositories;
 
 namespace EmployeeManagement.WinForms;
 
-public partial class Form1 : Form
+public partial class MainForm : Form
 {
     private readonly IDepartmentRepository _departmentRepository;
     private readonly IEmployeeRepository _employeeRepository;
 
-    public Form1(IEmployeeRepository employeeRepository, IDepartmentRepository departmentRepository)
+    public MainForm(IEmployeeRepository employeeRepository, IDepartmentRepository departmentRepository)
     {
         InitializeComponent();
         _employeeRepository = employeeRepository;
         _departmentRepository = departmentRepository;
+    }
+
+    private async void MainForm_Load(object sender, EventArgs e)
+    {
+        var employees = await _employeeRepository.GetAllAsync();
+        employeesGrid.DataSource = employees;
     }
 }
