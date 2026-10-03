@@ -28,6 +28,7 @@ public partial class MainForm : Form
         {
             var employees = await _employeeRepository.GetAllAsync();
             employeesGrid.DataSource = employees;
+            employeeCountLabel.Text = employees.Count == 1 ? "1 employee" : $"{employees.Count} employees";
         }
         catch (Exception ex)
         {

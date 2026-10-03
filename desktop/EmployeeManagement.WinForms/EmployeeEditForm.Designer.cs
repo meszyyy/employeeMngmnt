@@ -190,22 +190,34 @@ partial class EmployeeEditForm
         // 
         // cancelButton
         // 
+        cancelButton.BackColor = Color.White;
+        cancelButton.Cursor = Cursors.Hand;
         cancelButton.DialogResult = DialogResult.Cancel;
-        cancelButton.Location = new Point(316, 3);
+        cancelButton.FlatAppearance.BorderColor = Color.FromArgb(209, 213, 219);
+        cancelButton.FlatStyle = FlatStyle.Flat;
+        cancelButton.ForeColor = Color.FromArgb(55, 65, 81);
+        cancelButton.Location = new Point(303, 3);
         cancelButton.Name = "cancelButton";
-        cancelButton.Size = new Size(75, 25);
+        cancelButton.Size = new Size(88, 30);
         cancelButton.TabIndex = 1;
         cancelButton.Text = "Cancel";
-        cancelButton.UseVisualStyleBackColor = true;
-        // 
+        cancelButton.UseVisualStyleBackColor = false;
+        //
         // saveButton
-        // 
-        saveButton.Location = new Point(235, 3);
+        //
+        saveButton.BackColor = Color.FromArgb(37, 99, 235);
+        saveButton.Cursor = Cursors.Hand;
+        saveButton.FlatAppearance.BorderSize = 0;
+        saveButton.FlatAppearance.MouseOverBackColor = Color.FromArgb(29, 78, 216);
+        saveButton.FlatStyle = FlatStyle.Flat;
+        saveButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+        saveButton.ForeColor = Color.White;
+        saveButton.Location = new Point(209, 3);
         saveButton.Name = "saveButton";
-        saveButton.Size = new Size(75, 25);
+        saveButton.Size = new Size(88, 30);
         saveButton.TabIndex = 0;
         saveButton.Text = "Save";
-        saveButton.UseVisualStyleBackColor = true;
+        saveButton.UseVisualStyleBackColor = false;
         saveButton.Click += saveButton_Click;
         // 
         // errorProvider
@@ -217,8 +229,10 @@ partial class EmployeeEditForm
         AcceptButton = saveButton;
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
+        BackColor = Color.White;
         CancelButton = cancelButton;
-        ClientSize = new Size(424, 241);
+        ClientSize = new Size(440, 252);
+        ForeColor = Color.FromArgb(55, 65, 81);
         Controls.Add(layoutPanel);
         FormBorderStyle = FormBorderStyle.FixedDialog;
         MaximizeBox = false;
