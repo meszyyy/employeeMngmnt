@@ -203,6 +203,7 @@ partial class EmployeeEditForm
         saveButton.TabIndex = 0;
         saveButton.Text = "Save";
         saveButton.UseVisualStyleBackColor = true;
+        saveButton.Click += saveButton_Click;
         // 
         // EmployeeEditForm
         // 
