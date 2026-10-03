@@ -10,6 +10,7 @@ public partial class EmployeeEditForm : Form
     private readonly IReadOnlyList<Department> _departments;
     private readonly Employee? _employee;
     private readonly IEmployeeRepository _employeeRepository;
+    private bool _isBusy;
 
     public EmployeeEditForm(IReadOnlyList<Department> departments, IEmployeeRepository employeeRepository, Employee? employee = null)
     {
@@ -56,6 +57,7 @@ public partial class EmployeeEditForm : Form
             EntryDate = DateOnly.FromDateTime(entryDatePicker.Value)
         };
 
+        SetBusy(true);
         try
         {
             if (_employee is null)
@@ -87,6 +89,10 @@ public partial class EmployeeEditForm : Form
                 "Error",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Error);
+        }
+        finally
+        {
+            SetBusy(false);
         }
     }
 
@@ -140,5 +146,24 @@ public partial class EmployeeEditForm : Form
 
         var firstInvalid = controlsInTabOrder.FirstOrDefault(c => errorProvider.GetError(c).Length > 0);
         firstInvalid?.Focus();
+    }
+
+    private void SetBusy(bool isBusy)
+    {
+        _isBusy = isBusy;
+        UseWaitCursor = isBusy;
+        saveButton.Enabled = !isBusy;
+        cancelButton.Enabled = !isBusy; 
+    }
+
+    private void EmployeeEditForm_FormClosing(object sender, FormClosingEventArgs e)
+    {
+        // Block closing (e.g. the X button) while a save is running, otherwise the save would
+        // finish in the background after the user thinks it was cancelled.
+        // A successful save sets DialogResult = OK, and that close must still be allowed.
+        if (_isBusy && DialogResult != DialogResult.OK)
+        {
+            e.Cancel = true;
+        }
     }
 }

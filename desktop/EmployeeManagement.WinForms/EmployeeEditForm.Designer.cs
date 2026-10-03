@@ -227,6 +227,7 @@ partial class EmployeeEditForm
         ShowInTaskbar = false;
         StartPosition = FormStartPosition.CenterParent;
         Text = "Employee";
+        FormClosing += EmployeeEditForm_FormClosing;
         Load += EmployeeEditForm_Load;
         layoutPanel.ResumeLayout(false);
         layoutPanel.PerformLayout();

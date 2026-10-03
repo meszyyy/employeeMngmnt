@@ -23,6 +23,7 @@ public partial class MainForm : Form
 
     private async Task LoadEmployeesAsync()
     {
+        SetBusy(true);
         try
         {
             var employees = await _employeeRepository.GetAllAsync();
@@ -34,6 +35,10 @@ public partial class MainForm : Form
                 "Error",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Error);
+        }
+        finally
+        {
+            SetBusy(false);
         }
 
         UpdateButtonStates();
@@ -60,6 +65,7 @@ public partial class MainForm : Form
             return;
         }
 
+        SetBusy(true);
         try
         {
             var isDeleted = await _employeeRepository.DeleteAsync(employee.Id);
@@ -79,6 +85,11 @@ public partial class MainForm : Form
                 MessageBoxIcon.Error);
             return;
         }
+        finally
+        {
+            SetBusy(false);
+        }
+
         await LoadEmployeesAsync();
     }
 
@@ -148,5 +159,11 @@ public partial class MainForm : Form
     private void employeesGrid_SelectionChanged(object sender, EventArgs e)
     {
         UpdateButtonStates();
+    }
+
+    private void SetBusy(bool isBusy)
+    {
+        UseWaitCursor = isBusy;
+        mainToolStrip.Enabled = !isBusy;
     }
 }
