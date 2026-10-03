@@ -135,6 +135,7 @@ partial class MainForm
         deleteButton.Name = "deleteButton";
         deleteButton.Size = new Size(44, 22);
         deleteButton.Text = "Delete";
+        deleteButton.Click += deleteButton_Click;
         // 
         // refreshButton
         // 
