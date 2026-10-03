@@ -29,7 +29,14 @@ require __DIR__ . '/../templates/header.php';
                 <td><?= e($employee['Email']) ?></td>
                 <td><?= e($employee['DepartmentName']) ?></td>
                 <td><?= e($employee['EntryDate']) ?></td>
-                <td><a href="edit.php?id=<?= e((string) $employee['Id']) ?>" class="btn btn-sm btn-outline-secondary">Edit</a></td>
+                <td>
+                    <a href="edit.php?id=<?= e((string) $employee['Id']) ?>" class="btn btn-sm btn-outline-secondary">Edit</a>
+                    <form method="post" action="delete.php" class="d-inline"
+                          onsubmit="return confirm('Are you sure you want to delete <?= e($employee['FirstName'] . ' ' . $employee['LastName']) ?>?');">
+                        <input type="hidden" name="id" value="<?= e((string) $employee['Id']) ?>">
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                    </form>
+                </td>
             </tr>
         <?php endforeach; ?>
     </tbody>

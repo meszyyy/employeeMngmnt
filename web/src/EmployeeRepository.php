@@ -80,4 +80,11 @@ class EmployeeRepository
             'id' => $id
         ]);
     }
+
+    public function delete(int $id): void
+    {
+        $sql = 'DELETE FROM dbo.Employee WHERE Id = :id';
+        $statement = $this->pdo->prepare($sql);
+        $statement->execute(['id' => $id]);
+    }
 }
