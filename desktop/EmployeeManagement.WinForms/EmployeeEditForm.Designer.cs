@@ -28,6 +28,7 @@ partial class EmployeeEditForm
     /// </summary>
     private void InitializeComponent()
     {
+        components = new System.ComponentModel.Container();
         layoutPanel = new TableLayoutPanel();
         firstNameLabel = new Label();
         firstNameTextBox = new TextBox();
@@ -42,8 +43,10 @@ partial class EmployeeEditForm
         buttonPanel = new FlowLayoutPanel();
         cancelButton = new Button();
         saveButton = new Button();
+        errorProvider = new ErrorProvider(components);
         layoutPanel.SuspendLayout();
         buttonPanel.SuspendLayout();
+        ((System.ComponentModel.ISupportInitialize)errorProvider).BeginInit();
         SuspendLayout();
         // 
         // layoutPanel
@@ -65,7 +68,7 @@ partial class EmployeeEditForm
         layoutPanel.Dock = DockStyle.Fill;
         layoutPanel.Location = new Point(0, 0);
         layoutPanel.Name = "layoutPanel";
-        layoutPanel.Padding = new Padding(12);
+        layoutPanel.Padding = new Padding(12, 12, 30, 12);
         layoutPanel.RowCount = 6;
         layoutPanel.RowStyles.Add(new RowStyle());
         layoutPanel.RowStyles.Add(new RowStyle());
@@ -205,6 +208,10 @@ partial class EmployeeEditForm
         saveButton.UseVisualStyleBackColor = true;
         saveButton.Click += saveButton_Click;
         // 
+        // errorProvider
+        // 
+        errorProvider.ContainerControl = this;
+        // 
         // EmployeeEditForm
         // 
         AcceptButton = saveButton;
@@ -224,6 +231,7 @@ partial class EmployeeEditForm
         layoutPanel.ResumeLayout(false);
         layoutPanel.PerformLayout();
         buttonPanel.ResumeLayout(false);
+        ((System.ComponentModel.ISupportInitialize)errorProvider).EndInit();
         ResumeLayout(false);
     }
 
@@ -243,4 +251,5 @@ partial class EmployeeEditForm
     private FlowLayoutPanel buttonPanel;
     private Button cancelButton;
     private Button saveButton;
+    private ErrorProvider errorProvider;
 }

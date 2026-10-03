@@ -1,5 +1,6 @@
 using EmployeeManagement.Core.Models;
 using EmployeeManagement.Core.Repositories;
+using System.Net.Mail;
 
 namespace EmployeeManagement.WinForms;
 
@@ -41,6 +42,9 @@ public partial class EmployeeEditForm : Form
 
     private async void saveButton_Click(object sender, EventArgs e)
     {
+        if (!ValidateInput())
+            return;
+
         var employee = new Employee
         {
             Id = _employee?.Id ?? 0,
@@ -78,5 +82,57 @@ public partial class EmployeeEditForm : Form
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Error);
         }
+    }
+
+    private bool ValidateInput()
+    {
+        errorProvider.Clear();          // remove the old errors
+        var isValid = true;
+
+        if (string.IsNullOrWhiteSpace(firstNameTextBox.Text))
+        {
+            errorProvider.SetError(firstNameTextBox, "First name is required.");
+            isValid = false;
+        }
+
+        if (string.IsNullOrWhiteSpace(lastNameTextBox.Text))
+        {
+            errorProvider.SetError(lastNameTextBox, "Last name is required.");
+            isValid = false;
+        }
+
+        if (string.IsNullOrWhiteSpace(emailTextBox.Text))
+        {
+            errorProvider.SetError(emailTextBox, "Email is required.");
+            isValid = false;
+        }
+        else if (!IsValidEmail(emailTextBox.Text.Trim()))
+        {
+            errorProvider.SetError(emailTextBox, "Email must be a valid email address.");
+            isValid = false;
+        }
+
+        if (!isValid)
+        {
+            FocusFirstInvalidControl();
+        }
+
+        return isValid;
+    }
+
+    private static bool IsValidEmail(string email)
+    {
+        // MailAddress also accepts display-name formats like "John <john@example.com>",
+        // so the parsed address must be exactly what the user typed.
+        return MailAddress.TryCreate(email, out var mailAddress)
+            && mailAddress.Address == email;
+    }
+
+    private void FocusFirstInvalidControl()
+    {
+        Control[] controlsInTabOrder = [firstNameTextBox, lastNameTextBox, emailTextBox];
+
+        var firstInvalid = controlsInTabOrder.FirstOrDefault(c => errorProvider.GetError(c).Length > 0);
+        firstInvalid?.Focus();
     }
 }
