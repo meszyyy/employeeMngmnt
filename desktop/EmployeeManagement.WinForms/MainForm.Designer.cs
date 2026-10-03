@@ -61,6 +61,7 @@ partial class MainForm
         employeesGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
         employeesGrid.Size = new Size(800, 425);
         employeesGrid.TabIndex = 0;
+        employeesGrid.CellDoubleClick += employeesGrid_CellDoubleClick;
         // 
         // firstNameColumn
         // 
@@ -117,6 +118,7 @@ partial class MainForm
         newButton.Name = "newButton";
         newButton.Size = new Size(35, 22);
         newButton.Text = "New";
+        newButton.Click += newButton_Click;
         // 
         // editButton
         // 
@@ -126,6 +128,7 @@ partial class MainForm
         editButton.Name = "editButton";
         editButton.Size = new Size(31, 22);
         editButton.Text = "Edit";
+        editButton.Click += editButton_Click;
         // 
         // deleteButton
         // 

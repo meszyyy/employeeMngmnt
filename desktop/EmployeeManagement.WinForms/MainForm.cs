@@ -79,4 +79,60 @@ public partial class MainForm : Form
         }
         await LoadEmployeesAsync();
     }
+
+    private async Task<IReadOnlyList<Department>?> LoadDepartmentsAsync()
+    {
+        try
+        {
+            return await _departmentRepository.GetAllAsync();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"An error occurred while loading departments: {ex.Message}",
+                "Error",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+            return null;
+        }
+    }
+
+    private async void newButton_Click(object sender, EventArgs e)
+    {
+        var departments = await LoadDepartmentsAsync();
+        if (departments is null)
+            return;
+
+        using var employeeEditForm = new EmployeeEditForm(departments, _employeeRepository);
+        if (employeeEditForm.ShowDialog(this) == DialogResult.OK) // this because of StartPosition = CenterParent
+        {
+            await LoadEmployeesAsync();
+        }
+    }
+
+    private async void editButton_Click(object sender, EventArgs e)
+    {
+        await EditSelectedEmployeeAsync();
+    }
+
+    private async void employeesGrid_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+    {
+        if (e.RowIndex < 0) return;
+        await EditSelectedEmployeeAsync();
+    }
+
+    private async Task EditSelectedEmployeeAsync()
+    {
+        if (employeesGrid.CurrentRow?.DataBoundItem is not Employee employee)
+            return;
+
+        var departments = await LoadDepartmentsAsync();
+        if (departments is null)
+            return;
+
+        using var employeeEditForm = new EmployeeEditForm(departments, _employeeRepository, employee);
+        if (employeeEditForm.ShowDialog(this) == DialogResult.OK) // this because of StartPosition = CenterParent
+        {
+            await LoadEmployeesAsync();
+        }
+    }
 }
