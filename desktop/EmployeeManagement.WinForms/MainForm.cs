@@ -17,7 +17,17 @@ public partial class MainForm : Form
 
     private async void MainForm_Load(object sender, EventArgs e)
     {
+        await LoadEmployeesAsync();
+    }
+
+    private async Task LoadEmployeesAsync()
+    {
         var employees = await _employeeRepository.GetAllAsync();
         employeesGrid.DataSource = employees;
+    }
+
+    private async void refreshButton_Click(object sender, EventArgs e)
+    {
+        await LoadEmployeesAsync();
     }
 }
