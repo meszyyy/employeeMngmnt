@@ -45,9 +45,9 @@ partial class EmployeeEditForm
         layoutPanel.SuspendLayout();
         buttonPanel.SuspendLayout();
         SuspendLayout();
-        //
+        // 
         // layoutPanel
-        //
+        // 
         layoutPanel.ColumnCount = 2;
         layoutPanel.ColumnStyles.Add(new ColumnStyle());
         layoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
@@ -75,47 +75,47 @@ partial class EmployeeEditForm
         layoutPanel.RowStyles.Add(new RowStyle());
         layoutPanel.Size = new Size(424, 241);
         layoutPanel.TabIndex = 0;
-        //
+        // 
         // firstNameLabel
-        //
+        // 
         firstNameLabel.Anchor = AnchorStyles.Left;
         firstNameLabel.AutoSize = true;
         firstNameLabel.Location = new Point(15, 19);
         firstNameLabel.Name = "firstNameLabel";
-        firstNameLabel.Size = new Size(64, 15);
+        firstNameLabel.Size = new Size(62, 15);
         firstNameLabel.TabIndex = 0;
         firstNameLabel.Text = "First name";
-        //
+        // 
         // firstNameTextBox
-        //
+        // 
         firstNameTextBox.Dock = DockStyle.Fill;
-        firstNameTextBox.Location = new Point(105, 15);
+        firstNameTextBox.Location = new Point(96, 15);
         firstNameTextBox.MaxLength = 100;
         firstNameTextBox.Name = "firstNameTextBox";
-        firstNameTextBox.Size = new Size(304, 23);
+        firstNameTextBox.Size = new Size(313, 23);
         firstNameTextBox.TabIndex = 1;
-        //
+        // 
         // lastNameLabel
-        //
+        // 
         lastNameLabel.Anchor = AnchorStyles.Left;
         lastNameLabel.AutoSize = true;
         lastNameLabel.Location = new Point(15, 48);
         lastNameLabel.Name = "lastNameLabel";
-        lastNameLabel.Size = new Size(63, 15);
+        lastNameLabel.Size = new Size(61, 15);
         lastNameLabel.TabIndex = 2;
         lastNameLabel.Text = "Last name";
-        //
+        // 
         // lastNameTextBox
-        //
+        // 
         lastNameTextBox.Dock = DockStyle.Fill;
-        lastNameTextBox.Location = new Point(105, 44);
+        lastNameTextBox.Location = new Point(96, 44);
         lastNameTextBox.MaxLength = 100;
         lastNameTextBox.Name = "lastNameTextBox";
-        lastNameTextBox.Size = new Size(304, 23);
+        lastNameTextBox.Size = new Size(313, 23);
         lastNameTextBox.TabIndex = 3;
-        //
+        // 
         // emailLabel
-        //
+        // 
         emailLabel.Anchor = AnchorStyles.Left;
         emailLabel.AutoSize = true;
         emailLabel.Location = new Point(15, 77);
@@ -123,18 +123,18 @@ partial class EmployeeEditForm
         emailLabel.Size = new Size(41, 15);
         emailLabel.TabIndex = 4;
         emailLabel.Text = "E-mail";
-        //
+        // 
         // emailTextBox
-        //
+        // 
         emailTextBox.Dock = DockStyle.Fill;
-        emailTextBox.Location = new Point(105, 73);
+        emailTextBox.Location = new Point(96, 73);
         emailTextBox.MaxLength = 320;
         emailTextBox.Name = "emailTextBox";
-        emailTextBox.Size = new Size(304, 23);
+        emailTextBox.Size = new Size(313, 23);
         emailTextBox.TabIndex = 5;
-        //
+        // 
         // departmentLabel
-        //
+        // 
         departmentLabel.Anchor = AnchorStyles.Left;
         departmentLabel.AutoSize = true;
         departmentLabel.Location = new Point(15, 106);
@@ -142,51 +142,51 @@ partial class EmployeeEditForm
         departmentLabel.Size = new Size(70, 15);
         departmentLabel.TabIndex = 6;
         departmentLabel.Text = "Department";
-        //
+        // 
         // departmentComboBox
-        //
+        // 
         departmentComboBox.Dock = DockStyle.Fill;
         departmentComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-        departmentComboBox.Location = new Point(105, 102);
+        departmentComboBox.Location = new Point(96, 102);
         departmentComboBox.Name = "departmentComboBox";
-        departmentComboBox.Size = new Size(304, 23);
+        departmentComboBox.Size = new Size(313, 23);
         departmentComboBox.TabIndex = 7;
-        //
+        // 
         // entryDateLabel
-        //
+        // 
         entryDateLabel.Anchor = AnchorStyles.Left;
         entryDateLabel.AutoSize = true;
         entryDateLabel.Location = new Point(15, 135);
         entryDateLabel.Name = "entryDateLabel";
-        entryDateLabel.Size = new Size(77, 15);
+        entryDateLabel.Size = new Size(75, 15);
         entryDateLabel.TabIndex = 8;
         entryDateLabel.Text = "Date of entry";
-        //
+        // 
         // entryDatePicker
-        //
+        // 
         entryDatePicker.Dock = DockStyle.Fill;
         entryDatePicker.Format = DateTimePickerFormat.Short;
-        entryDatePicker.Location = new Point(105, 131);
+        entryDatePicker.Location = new Point(96, 131);
         entryDatePicker.Name = "entryDatePicker";
-        entryDatePicker.Size = new Size(304, 23);
+        entryDatePicker.Size = new Size(313, 23);
         entryDatePicker.TabIndex = 9;
-        //
+        // 
         // buttonPanel
-        //
+        // 
         buttonPanel.AutoSize = true;
         layoutPanel.SetColumnSpan(buttonPanel, 2);
         buttonPanel.Controls.Add(cancelButton);
         buttonPanel.Controls.Add(saveButton);
         buttonPanel.Dock = DockStyle.Fill;
         buttonPanel.FlowDirection = FlowDirection.RightToLeft;
-        buttonPanel.Location = new Point(15, 160);
+        buttonPanel.Location = new Point(15, 169);
         buttonPanel.Margin = new Padding(3, 12, 3, 3);
         buttonPanel.Name = "buttonPanel";
-        buttonPanel.Size = new Size(394, 31);
+        buttonPanel.Size = new Size(394, 57);
         buttonPanel.TabIndex = 10;
-        //
+        // 
         // cancelButton
-        //
+        // 
         cancelButton.DialogResult = DialogResult.Cancel;
         cancelButton.Location = new Point(316, 3);
         cancelButton.Name = "cancelButton";
@@ -194,18 +194,18 @@ partial class EmployeeEditForm
         cancelButton.TabIndex = 1;
         cancelButton.Text = "Cancel";
         cancelButton.UseVisualStyleBackColor = true;
-        //
+        // 
         // saveButton
-        //
+        // 
         saveButton.Location = new Point(235, 3);
         saveButton.Name = "saveButton";
         saveButton.Size = new Size(75, 25);
         saveButton.TabIndex = 0;
         saveButton.Text = "Save";
         saveButton.UseVisualStyleBackColor = true;
-        //
+        // 
         // EmployeeEditForm
-        //
+        // 
         AcceptButton = saveButton;
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
@@ -219,6 +219,7 @@ partial class EmployeeEditForm
         ShowInTaskbar = false;
         StartPosition = FormStartPosition.CenterParent;
         Text = "Employee";
+        Load += EmployeeEditForm_Load;
         layoutPanel.ResumeLayout(false);
         layoutPanel.PerformLayout();
         buttonPanel.ResumeLayout(false);
