@@ -1,0 +1,99 @@
+/*
+ * Shared color palette - the same colors as in the WinForms app.
+ */
+:root {
+    --app-primary: #2563eb;
+    --app-primary-hover: #1d4ed8;
+    --app-danger: #b91c1c;
+    --app-text: #1f2937;
+    --app-text-muted: #6b7280;
+    --app-header-bg: #f3f4f6;
+    --app-border: #e5e7eb;
+    --app-page-bg: #f9fafb;
+    --app-selection: #dbeafe;
+}
+
+body {
+    background-color: var(--app-page-bg);
+    color: var(--app-text);
+}
+
+/* Top bar */
+.app-header {
+    background-color: #fff;
+    border-bottom: 1px solid var(--app-border);
+}
+
+.app-header a {
+    color: var(--app-text);
+    text-decoration: none;
+}
+
+/* Cards (the white boxes around the table and the form) */
+.app-card {
+    background-color: #fff;
+    border: 1px solid var(--app-border);
+    border-radius: 0.5rem;
+}
+
+.app-card-header {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--app-border);
+}
+
+/* Buttons */
+.btn-primary {
+    --bs-btn-bg: var(--app-primary);
+    --bs-btn-border-color: var(--app-primary);
+    --bs-btn-hover-bg: var(--app-primary-hover);
+    --bs-btn-hover-border-color: var(--app-primary-hover);
+    --bs-btn-active-bg: var(--app-primary-hover);
+    --bs-btn-active-border-color: var(--app-primary-hover);
+    font-weight: 600;
+}
+
+.btn-outline-danger {
+    --bs-btn-color: var(--app-danger);
+    --bs-btn-border-color: var(--app-danger);
+    --bs-btn-hover-bg: var(--app-danger);
+    --bs-btn-hover-border-color: var(--app-danger);
+}
+
+/* Table - same look as the WinForms grid */
+.app-table {
+    margin-bottom: 0;
+}
+
+.app-table thead th {
+    background-color: var(--app-header-bg);
+    color: #374151;
+    font-weight: 600;
+    border-bottom: 1px solid var(--app-border);
+    padding: 0.75rem 1.25rem;
+    white-space: nowrap;
+}
+
+.app-table td {
+    padding: 0.6rem 1.25rem;
+    vertical-align: middle;
+    border-color: var(--app-border);
+}
+
+.app-table tbody tr:hover > td {
+    background-color: var(--app-selection);
+}
+
+.app-table tbody tr:last-child > td {
+    border-bottom: 0;
+}
+
+/* Form fields: blue focus ring in the primary color */
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--app-primary);
+    box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.2);
+}
+
+.form-label {
+    font-weight: 500;
+}
