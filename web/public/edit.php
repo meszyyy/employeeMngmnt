@@ -30,14 +30,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $errors = EmployeeValidator::validate($data);
 
     if ($errors === []) {
-        if ($id === null) {
-            $employeeRepository->create($data);
-        } else {
-            $employeeRepository->update($id, $data);
-        }
+        try {
+            if ($id === null) {
+                $employeeRepository->create($data);
+            } else {
+                $employeeRepository->update($id, $data);
+            }
 
-        header('Location: index.php');
-        exit;
+            header('Location: index.php');
+            exit;
+        } catch (DuplicateEmailException) {
+            $errors['Email'] = 'This e-mail address is already in use.';
+        }
     }
 
     $form = $data;

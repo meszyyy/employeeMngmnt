@@ -5,11 +5,11 @@ declare(strict_types=1);
 require_once __DIR__ . '/src/Database.php';
 require_once __DIR__ . '/src/EmployeeRepository.php';
 require_once __DIR__ . '/src/EmployeeValidator.php';
+require_once __DIR__ . '/src/DuplicateEmailException.php';
 
 $config = require __DIR__ . '/config.php';
 $pdo = Database::connect($config);
 $employeeRepository = new EmployeeRepository($pdo);
-$employeeValidator = new EmployeeValidator();
 
 function e(?string $value): string
 {

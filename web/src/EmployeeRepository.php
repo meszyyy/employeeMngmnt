@@ -23,6 +23,7 @@ class EmployeeRepository
     public function getDepartments(): array
     {
         $sql = 'SELECT Id, Name FROM dbo.Department ORDER BY Name';
+
         return $this->pdo->query($sql)->fetchAll();
     }
 
@@ -49,13 +50,22 @@ class EmployeeRepository
         ';
 
         $statement = $this->pdo->prepare($sql);
-        $statement->execute([
-            'firstName' => $data['FirstName'],
-            'lastName' => $data['LastName'],
-            'email' => $data['Email'],
-            'entryDate' => $data['EntryDate'],
-            'departmentId' => $data['DepartmentId']
-        ]);
+
+        try {
+            $statement->execute([
+                'firstName' => $data['FirstName'],
+                'lastName' => $data['LastName'],
+                'email' => $data['Email'],
+                'entryDate' => $data['EntryDate'],
+                'departmentId' => $data['DepartmentId'],
+            ]);
+        } catch (PDOException $exception) {
+            if ($this->isDuplicateEmail($exception)) {
+                throw new DuplicateEmailException();
+            }
+
+            throw $exception;
+        }
     }
 
     public function update(int $id, array $data): void
@@ -63,28 +73,47 @@ class EmployeeRepository
         $sql = '
             UPDATE dbo.Employee
             SET FirstName = :firstName,
-            LastName = :lastName,
-            Email = :email,
-            EntryDate = :entryDate,
-            DepartmentId = :departmentId
+                LastName = :lastName,
+                Email = :email,
+                EntryDate = :entryDate,
+                DepartmentId = :departmentId
             WHERE Id = :id
         ';
 
         $statement = $this->pdo->prepare($sql);
-        $statement->execute([
-            'firstName' => $data['FirstName'],
-            'lastName' => $data['LastName'],
-            'email' => $data['Email'],
-            'entryDate' => $data['EntryDate'],
-            'departmentId' => $data['DepartmentId'],
-            'id' => $id
-        ]);
+
+        try {
+            $statement->execute([
+                'firstName' => $data['FirstName'],
+                'lastName' => $data['LastName'],
+                'email' => $data['Email'],
+                'entryDate' => $data['EntryDate'],
+                'departmentId' => $data['DepartmentId'],
+                'id' => $id,
+            ]);
+        } catch (PDOException $exception) {
+            if ($this->isDuplicateEmail($exception)) {
+                throw new DuplicateEmailException();
+            }
+
+            throw $exception;
+        }
     }
 
     public function delete(int $id): void
     {
         $sql = 'DELETE FROM dbo.Employee WHERE Id = :id';
+
         $statement = $this->pdo->prepare($sql);
         $statement->execute(['id' => $id]);
+    }
+
+    private function isDuplicateEmail(PDOException $exception): bool
+    {
+        $sqlServerErrorCode = $exception->errorInfo[1] ?? null;
+        $message = $exception->errorInfo[2] ?? '';
+
+        return in_array($sqlServerErrorCode, [2627, 2601], true)
+            && str_contains($message, 'UQ_Employee_Email');
     }
 }
