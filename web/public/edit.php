@@ -15,6 +15,9 @@ if ($id !== null) {
     }
 }
 
+$form = $employee ?? [];
+$errors = [];
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = [
         'FirstName' => trim($_POST['FirstName'] ?? ''),
@@ -24,14 +27,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'EntryDate' => $_POST['EntryDate'] ?? '',
     ];
 
-    if ($id === null) {
-        $employeeRepository->create($data);
-    } else {
-        $employeeRepository->update($id, $data);
+    $errors = EmployeeValidator::validate($data);
+
+    if ($errors === []) {
+        if ($id === null) {
+            $employeeRepository->create($data);
+        } else {
+            $employeeRepository->update($id, $data);
+        }
+
+        header('Location: index.php');
+        exit;
     }
 
-    header('Location: index.php');
-    exit;
+    $form = $data;
 }
 
 $departments = $employeeRepository->getDepartments();
@@ -44,20 +53,32 @@ require __DIR__ . '/../templates/header.php';
 <form method="post" class="bg-white p-4 rounded border" style="max-width: 500px">
     <div class="mb-3">
         <label for="FirstName" class="form-label">First name</label>
-        <input type="text" id="FirstName" name="FirstName" class="form-control" maxlength="100"
-               value="<?= e($employee['FirstName'] ?? '') ?>">
+        <input type="text" id="FirstName" name="FirstName" maxlength="100"
+               class="form-control <?= isset($errors['FirstName']) ? 'is-invalid' : '' ?>"
+               value="<?= e($form['FirstName'] ?? '') ?>">
+        <?php if (isset($errors['FirstName'])): ?>
+            <div class="invalid-feedback"><?= e($errors['FirstName']) ?></div>
+        <?php endif; ?>
     </div>
 
     <div class="mb-3">
         <label for="LastName" class="form-label">Last name</label>
-        <input type="text" id="LastName" name="LastName" class="form-control" maxlength="100"
-               value="<?= e($employee['LastName'] ?? '') ?>">
+        <input type="text" id="LastName" name="LastName" maxlength="100"
+               class="form-control <?= isset($errors['LastName']) ? 'is-invalid' : '' ?>"
+               value="<?= e($form['LastName'] ?? '') ?>">
+        <?php if (isset($errors['LastName'])): ?>
+            <div class="invalid-feedback"><?= e($errors['LastName']) ?></div>
+        <?php endif; ?>
     </div>
 
     <div class="mb-3">
         <label for="Email" class="form-label">E-mail</label>
-        <input type="email" id="Email" name="Email" class="form-control" maxlength="320"
-               value="<?= e($employee['Email'] ?? '') ?>">
+        <input type="email" id="Email" name="Email" maxlength="320"
+               class="form-control <?= isset($errors['Email']) ? 'is-invalid' : '' ?>"
+               value="<?= e($form['Email'] ?? '') ?>">
+        <?php if (isset($errors['Email'])): ?>
+            <div class="invalid-feedback"><?= e($errors['Email']) ?></div>
+        <?php endif; ?>
     </div>
 
     <div class="mb-3">
@@ -65,7 +86,7 @@ require __DIR__ . '/../templates/header.php';
         <select id="DepartmentId" name="DepartmentId" class="form-select">
             <?php foreach ($departments as $department): ?>
                 <option value="<?= e((string) $department['Id']) ?>"
-                    <?= ($employee['DepartmentId'] ?? null) == $department['Id'] ? 'selected' : '' ?>>
+                    <?= ($form['DepartmentId'] ?? null) == $department['Id'] ? 'selected' : '' ?>>
                     <?= e($department['Name']) ?>
                 </option>
             <?php endforeach; ?>
@@ -74,8 +95,12 @@ require __DIR__ . '/../templates/header.php';
 
     <div class="mb-3">
         <label for="EntryDate" class="form-label">Date of entry</label>
-        <input type="date" id="EntryDate" name="EntryDate" class="form-control"
-               value="<?= e($employee['EntryDate'] ?? '') ?>">
+        <input type="date" id="EntryDate" name="EntryDate"
+               class="form-control <?= isset($errors['EntryDate']) ? 'is-invalid' : '' ?>"
+               value="<?= e($form['EntryDate'] ?? '') ?>">
+        <?php if (isset($errors['EntryDate'])): ?>
+            <div class="invalid-feedback"><?= e($errors['EntryDate']) ?></div>
+        <?php endif; ?>
     </div>
 
     <button type="submit" class="btn btn-primary">Save</button>
